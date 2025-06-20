@@ -334,83 +334,225 @@ function App() {
 
   // --- Main Render ---
   if (!user) {
-    // Glassy, vibrant login/signup card with animated border and toggle
+    // Unified visually intense, modern card for both login & signup
+    // Use richer separation, accent border, floating labels, animated highlights
     return (
       <div style={{
-        minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: 'linear-gradient(135deg, #deeaff 0%, #fff9ef 70%)',
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'radial-gradient(circle at 66% 44%, #e8eeff 30%, #efcfff 85%, #cae4ff 100%)',
         overflow: 'hidden'
       }}>
         <div style={{
           background: 'var(--glass)',
-          boxShadow: '0 8px 48px 6px #4f8cff56, 0 1.5px 16px #e7eafc27',
-          borderRadius: 24,
-          padding: '48px 52px',
-          maxWidth: 388,
-          width: '95vw',
-          transform: 'translateY(0px)',
+          boxShadow: authMode === 'signup'
+            ? '0 10px 58px 12px #ab47bc57, 0 1.5px 16px #ab47bc39'
+            : '0 10px 52px 10px #4f8cff49, 0 1.5px 16px #4f8cff33',
+          borderRadius: 28,
+          padding: '54px 54px 38px 54px',
+          maxWidth: 420,
+          width: '97vw',
+          position: 'relative',
           backdropFilter: 'blur(10px)',
           WebkitBackdropFilter: 'var(--glass-blur)',
-          animation: 'glow-card 2s infinite alternate'
+          animation: 'glow-card 2.3s infinite alternate',
+          border: authMode === 'signup'
+            ? '3.5px solid #ab47bc55'
+            : '3.5px solid #4f8cff33',
+          zIndex: 2
         }}>
           <h2 style={{
-            color: 'var(--primary)',
-            marginTop: 0, marginBottom: 20, textAlign: 'center',
-            textShadow: '0 7px 32px #b3e2fd00, 0 0 2.5px #5999e6c8',
-            fontWeight: 700, letterSpacing: '0.03em'
+            color: authMode === 'signup' ? '#AB47BC' : 'var(--primary)',
+            margin: 0, marginBottom: 19, textAlign: 'center',
+            textShadow: authMode === 'signup'
+              ? '0 8px 28px #df8cff44, 0 1px 1px #c873d0'
+              : '0 7px 32px #b3e2fd00, 0 0 2.5px #5999e6c8',
+            fontWeight: 800, letterSpacing: '0.034em',
+            fontSize: 34
           }}>
             <span style={{
-              fontWeight: 800, fontSize: 38, color: 'var(--accent)',
-              verticalAlign: 'middle'
+              fontWeight: 900, fontSize: authMode === 'signup' ? 38 : 36,
+              color: authMode === 'signup' ? '#fff' : 'var(--accent)',
+              background: authMode === 'signup'
+                ? 'linear-gradient(92deg,#ab47bc 20%, #e3ffcc 81%)'
+                : 'linear-gradient(40deg,#ab47bc 13%, #4f8cff 76%)',
+              padding: '2px 9px', borderRadius: 14, boxShadow: '0 2px 12px #ab47bc38',
+              filter: 'drop-shadow(0 2.5px 12px #ab47bc48)'
             }}>⧉</span><br />
-            ReactConnect CRM
+            {authMode === 'login' ? 'Welcome Back' : 'Create Account'}
           </h2>
-          <form onSubmit={authMode === 'login' ? handleLogin : handleSignup}>
-            <label>Email<br />
-              <input name="email" type="email" required style={inputStyle()} autoFocus />
-            </label>
-            <br /><br />
-            <label>Password<br />
-              <input name="password" type="password" required minLength={4} style={inputStyle()} />
-            </label>
-            <br /><br />
-            {authError && <div style={{ color: 'var(--danger)', marginBottom: 10, fontWeight: 600 }}>{authError}</div>}
-            <ThemeButton type="submit" styleType="primary">{authMode === 'login' ? 'Login' : 'Sign Up'}</ThemeButton>
-          </form>
           <div style={{
-            marginTop: 16, fontSize: 15, display: 'flex', justifyContent: 'center', alignItems: 'center'
+            margin: authMode === 'signup' ? '-17px 0 19px 0' : '-12px 0 22px 0',
+            color: '#715c9e',
+            textAlign: 'center',
+            fontSize: 15.2,
+            fontWeight: 500,
+            letterSpacing: '.01em',
+            opacity: 0.8
           }}>
             {authMode === 'login'
-              ?
-              <>
-                <span style={{ color: '#859AB8', marginRight: 7 }}>No account?</span>
-                <button
-                  onClick={() => { setAuthMode('signup'); setAuthError(''); }}
+              ? `Sign in with your CRM account below`
+              : `Sign up for instant access to your CRM`}
+          </div>
+          <form onSubmit={authMode === 'login' ? handleLogin : handleSignup} autoComplete="off">
+            <div style={{ marginBottom: 28 }}>
+              {/* Email input */}
+              <div style={{
+                position: 'relative',
+                marginBottom: 15,
+                background: 'rgba(255,255,255,0.45)',
+                borderRadius: 13,
+                boxShadow: '0 0.5px 3.5px #d9cce933'
+              }}>
+                <input
+                  name="email"
+                  type="email"
+                  required
+                  autoFocus
+                  aria-label="Email"
+                  autoComplete="username"
                   style={{
-                    background: 'linear-gradient(90deg,#4f8cff,#ab47bc)', color: '#fff',
-                    border: 'none', textDecoration: 'underline', cursor: 'pointer',
-                    borderRadius: 7, fontWeight: 600, fontSize: 15.8,
-                    marginLeft: 1, padding: '6px 16px',
-                    transition: 'background 0.19s'
-                  }}>
-                  Sign up
-                </button>
-              </>
-              :
-              <>
-                <span style={{ color: '#859AB8', marginRight: 7 }}>Already registered?</span>
-                <button
-                  onClick={() => { setAuthMode('login'); setAuthError(''); }}
+                    ...inputStyle(),
+                    fontSize: 17.5,
+                    border: '2px solid #c8defc',
+                    paddingTop: 19,
+                    paddingBottom: 7,
+                    background: 'rgba(255,255,255,0.70)',
+                    boxShadow: '0 1.5px 8px #e8eafe1a,inset 0 1px 2px #e0e2ff66',
+                  }}
+                  id="signup-email"
+                />
+                <label htmlFor="signup-email" style={{
+                  position: 'absolute',
+                  left: 19, top: 5,
+                  fontSize: 14.2,
+                  color: '#4F8CFF',
+                  fontWeight: 700,
+                  letterSpacing: '0.03em',
+                  pointerEvents: 'none',
+                }}>Email</label>
+              </div>
+              {/* Password input */}
+              <div style={{
+                position: 'relative',
+                background: 'rgba(255,255,255,0.41)',
+                borderRadius: 13,
+                boxShadow: '0 0.5px 2.6px #ab47bc16'
+              }}>
+                <input
+                  name="password"
+                  type="password"
+                  required
+                  minLength={4}
+                  aria-label="Password"
+                  autoComplete={authMode === 'signup' ? 'new-password' : 'current-password'}
                   style={{
-                    background: 'linear-gradient(90deg,#ab47bc,#4f8cff)', color: '#fff',
-                    border: 'none', textDecoration: 'underline', cursor: 'pointer',
-                    borderRadius: 7, fontWeight: 600, fontSize: 15.8,
-                    marginLeft: 1, padding: '6px 16px',
-                    transition: 'background 0.19s'
-                  }}>
-                  Login
-                </button>
-              </>
+                    ...inputStyle(),
+                    fontSize: 17.1,
+                    border: '2px solid #eac9fa',
+                    paddingTop: 19,
+                    paddingBottom: 7,
+                    marginBottom: 0,
+                    background: 'rgba(255,255,255,0.73)',
+                  }}
+                  id="signup-password"
+                />
+                <label htmlFor="signup-password" style={{
+                  position: 'absolute',
+                  left: 19, top: 5,
+                  fontSize: 14.3,
+                  color: '#AB47BC',
+                  fontWeight: 600,
+                  letterSpacing: '0.03em',
+                  pointerEvents: 'none',
+                }}>Password</label>
+              </div>
+            </div>
+            {authError && <div style={{
+              color: 'var(--danger)',
+              marginBottom: 10,
+              fontWeight: 600,
+              textShadow: '0 1.5px 5px #ffe2e2'
+            }}>{authError}</div>}
+            <ThemeButton
+              type="submit"
+              styleType={authMode === 'signup' ? 'accent' : 'primary'}
+              style={{
+                boxShadow: authMode === 'signup'
+                  ? '0 4px 21px #ab47bc44, 0 2px 7px #df8cff23'
+                  : undefined,
+                fontWeight: 700,
+                letterSpacing: '.03em',
+                fontSize: 18,
+                marginBottom: 6,
+                minWidth: 124
+              }}
+            >
+              {authMode === 'login' ? 'Login' : 'Create Account'}
+            </ThemeButton>
+          </form>
+          {/* Navigation toggle */}
+          <div style={{
+            marginTop: 18,
+            fontSize: 15.2,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+            {authMode === 'login'
+              ? (
+                <>
+                  <span style={{
+                    color: '#A6A2B2',
+                    marginRight: 10
+                  }}>No account?</span>
+                  <button
+                    onClick={() => { setAuthMode('signup'); setAuthError(''); }}
+                    style={{
+                      background: 'linear-gradient(91deg,#ab47bc,#4f8cff)',
+                      color: '#fff',
+                      border: 'none',
+                      textDecoration: 'underline',
+                      cursor: 'pointer',
+                      borderRadius: 8,
+                      fontWeight: 700,
+                      fontSize: 16,
+                      marginLeft: 1,
+                      padding: '7px 20px',
+                      boxShadow: '0 1.5px 7px #ab47bc18,0 0.5px 1px #eac9fa22',
+                      transition: 'background 0.18s'
+                    }}>
+                    Sign up
+                  </button>
+                </>
+              )
+              : (
+                <>
+                  <span style={{
+                    color: '#A6A2B2', marginRight: 10
+                  }}>Already registered?</span>
+                  <button
+                    onClick={() => { setAuthMode('login'); setAuthError(''); }}
+                    style={{
+                      background: 'linear-gradient(89deg,#4f8cff,#ab47bc)',
+                      color: '#fff',
+                      border: 'none',
+                      textDecoration: 'underline',
+                      cursor: 'pointer',
+                      borderRadius: 8,
+                      fontWeight: 700,
+                      fontSize: 16,
+                      marginLeft: 1,
+                      padding: '7px 20px',
+                      boxShadow: '0 1.5px 7px #4f8cff18,0 0.5px 1px #eac9fa21',
+                      transition: 'background 0.18s'
+                    }}>
+                    Login
+                  </button>
+                </>
+              )
             }
           </div>
           {/* Card Glow Keyframe Animation */}
@@ -420,9 +562,38 @@ function App() {
                 from { box-shadow: 0 9px 54px 12px #ac9eda46, 0 1.5px 16px #e7eafc27; }
                 to   { box-shadow: 0 18px 68px 18px #7ed9fb7b, 0 1.5px 16px #b498eef7; }
               }
+              input[type='email'], input[type='password'] {
+                outline: none;
+              }
+              input[type='email']:focus, input[type='password']:focus {
+                border-color: #ab47bc;
+                box-shadow: 0 0 0 3px #ab47bc41;
+                background: #fff;
+              }
+              input[type='email']::placeholder, input[type='password']::placeholder {
+                color: #b2b2cc99;
+                letter-spacing: 0.009em;
+                font-size: 15.7px;
+                font-style: italic;
+              }
             `}
           </style>
         </div>
+        {/* Decorative blob shape or SVG for rich look (background, visually reinforcing "signup" theme) */}
+        {authMode === 'signup' && (
+          <svg width="480" height="360" viewBox="0 0 480 360" style={{
+            position: 'absolute',
+            left: -64,
+            bottom: -62,
+            zIndex: 0,
+            opacity: 0.24,
+            pointerEvents: 'none'
+          }}>
+            <ellipse cx="240" cy="200" rx="230" ry="80" fill="#ab47bc" />
+            <ellipse cx="370" cy="190" rx="120" ry="77" fill="#f7bfff" />
+            <ellipse cx="130" cy="270" rx="60" ry="32" fill="#4f8cff" />
+          </svg>
+        )}
       </div>
     );
   }
