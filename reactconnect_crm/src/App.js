@@ -334,52 +334,62 @@ function App() {
 
   // --- Main Render ---
   if (!user) {
-    // Unified visually intense, modern card for both login & signup
-    // Use richer separation, accent border, floating labels, animated highlights
+    // Modern authentication: animated glass morphism, lively micro-animations, deeper shadow, lively background blobs
     return (
       <div style={{
         minHeight: '100vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'radial-gradient(circle at 66% 44%, #e8eeff 30%, #efcfff 85%, #cae4ff 100%)',
-        overflow: 'hidden'
+        background: 'radial-gradient(circle at 60% 40%, #e8eeff 25%, #efcfff 87%, #cae4ff 100%)',
+        overflow: 'hidden',
+        position: 'relative'
       }}>
+        {/* Animated Background Blobs & Gradients */}
+        <svg width="700" height="400" style={{
+          position: 'absolute', top: -90, left: -140, zIndex: 0, opacity: 0.18, pointerEvents: 'none',
+          filter: 'blur(11px)'
+        }}>
+          <ellipse cx="240" cy="180" rx="320" ry="100" fill="#4f8cff" />
+          <ellipse cx="420" cy="210" rx="200" ry="67" fill="#ab47bc" />
+        </svg>
         <div style={{
           background: 'var(--glass)',
           boxShadow: authMode === 'signup'
-            ? '0 10px 58px 12px #ab47bc57, 0 1.5px 16px #ab47bc39'
-            : '0 10px 52px 10px #4f8cff49, 0 1.5px 16px #4f8cff33',
-          borderRadius: 28,
-          padding: '54px 54px 38px 54px',
-          maxWidth: 420,
-          width: '97vw',
+            ? '0 12px 74px 26px #ab47bc5c, 0 2.5px 22px #ab47bc46'
+            : '0 12px 73px 15px #4f8cff38, 0 2.5px 21px #4f8cff26',
+          borderRadius: 36,
+          padding: '52px 54px 38px 54px',
+          maxWidth: 450,
+          width: '98vw',
           position: 'relative',
-          backdropFilter: 'blur(10px)',
+          backdropFilter: 'blur(14px)',
           WebkitBackdropFilter: 'var(--glass-blur)',
-          animation: 'glow-card 2.3s infinite alternate',
+          animation: 'glow-card 2.7s infinite alternate',
           border: authMode === 'signup'
-            ? '3.5px solid #ab47bc55'
-            : '3.5px solid #4f8cff33',
-          zIndex: 2
+            ? '3.5px solid #ab47bc77'
+            : '3.5px solid #4f8cff49',
+          zIndex: 2,
+          overflow: 'hidden'
         }}>
           <h2 style={{
             color: authMode === 'signup' ? '#AB47BC' : 'var(--primary)',
             margin: 0, marginBottom: 19, textAlign: 'center',
             textShadow: authMode === 'signup'
-              ? '0 8px 28px #df8cff44, 0 1px 1px #c873d0'
+              ? '0 9px 44px #df8cff59, 0 1px 1px #c873d0'
               : '0 7px 32px #b3e2fd00, 0 0 2.5px #5999e6c8',
             fontWeight: 800, letterSpacing: '0.034em',
-            fontSize: 34
+            fontSize: 36,
+            animation: 'auth-title-pop 1.2s cubic-bezier(.95,.01,.68,1.37)'
           }}>
             <span style={{
-              fontWeight: 900, fontSize: authMode === 'signup' ? 38 : 36,
+              fontWeight: 900, fontSize: authMode === 'signup' ? 44 : 41,
               color: authMode === 'signup' ? '#fff' : 'var(--accent)',
               background: authMode === 'signup'
                 ? 'linear-gradient(92deg,#ab47bc 20%, #e3ffcc 81%)'
                 : 'linear-gradient(40deg,#ab47bc 13%, #4f8cff 76%)',
-              padding: '2px 9px', borderRadius: 14, boxShadow: '0 2px 12px #ab47bc38',
-              filter: 'drop-shadow(0 2.5px 12px #ab47bc48)'
+              padding: '2px 13px', borderRadius: 24, boxShadow: '0 7px 14px #ab47bc25',
+              filter: 'drop-shadow(0 2.5px 17px #ab47bc44)'
             }}>⧉</span><br />
             {authMode === 'login' ? 'Welcome Back' : 'Create Account'}
           </h2>
@@ -679,11 +689,24 @@ function App() {
           padding: '14px 0 18px 0',
           borderBottom: '0px solid transparent',
           marginBottom: 3,
+          position: 'relative',
         }}>
           <TabButton active={tab === 'dashboard'} onClick={() => setTab('dashboard')}>Dashboard</TabButton>
           <TabButton active={tab === 'customers'} onClick={() => setTab('customers')}>Customers</TabButton>
           <TabButton active={tab === 'interactions'} onClick={() => setTab('interactions')}>Interactions</TabButton>
           <TabButton active={tab === 'tasks'} onClick={() => setTab('tasks')}>Tasks</TabButton>
+          {/* Animated underline */}
+          <div style={{
+            position: 'absolute',
+            height: 4,
+            left: `${tab === 'dashboard' ? 0 : tab === 'customers' ? 25 : tab === 'interactions' ? 49 : 78}%`,
+            width: '21%',
+            background: 'linear-gradient(90deg,#4f8cff,#ab47bc 75%)',
+            borderRadius: 9,
+            boxShadow: '0 3px 9px #ab47bc21',
+            bottom: -4,
+            transition: 'left 0.25s cubic-bezier(.74,.3,.59,1), background 0.3s'
+          }} />
         </nav>
 
         {/* Dashboard Overview */}
@@ -1101,30 +1124,53 @@ function App() {
         .crm-table {
           width: 100%;
           border-collapse: separate;
-          margin-bottom: 9px;
-          margin-top: 7px;
-          background: linear-gradient(111deg,#fefeff 60%,#eff4fc 100%);
-          border-radius: 18px;
+          margin-bottom: 12px;
+          margin-top: 8px;
+          background: linear-gradient(114deg,#fff 64%,#eff4fc 100%);
+          border-radius: 19px;
           overflow: hidden;
-          box-shadow: 0 2.5px 21px #aaaee623,0 0.5px 2px #4F8CFF13;
+          box-shadow: 0 3.2px 24px #9aaad824,0 1.2px 6px #ab47bc13;
+          transition: box-shadow 0.21s, background 0.18s;
         }
         .crm-table th, .crm-table td {
           text-align: left;
-          padding: 13px 13px;
-          font-size: 1rem;
+          padding: 15px 14px;
+          font-size: 1.04rem;
+          border-bottom: 1.6px solid #e7f0fe31;
+          transition: background 0.16s;
+        }
+        .crm-table tbody tr {
+          transition: background 0.18s;
+        }
+        .crm-table tbody tr:hover {
+          background: linear-gradient(90deg, #e6f1ff44 60%, #f6eafe11 100%);
+          box-shadow: 0 3px 19px #4f8cff2c;
         }
         .crm-table tbody tr:nth-child(even) {
-          background: #eff6fd73;
+          background: #e6e6f673;
         }
         .crm-table th {
           background: linear-gradient(90deg,#f9f7fe 40%,#e3f2fd 100%);
           color: #4F8CFF;
-          font-weight: 800;
-          font-size: 1.02rem;
+          font-weight: 900;
+          font-size: 1.07rem;
           letter-spacing: 0.03em;
+          border-bottom: 2.2px solid #e9e4fa36;
         }
         .crm-table td {
-          border-bottom: 1.2px solid #f2eefc;
+          border-bottom: 1.1px solid #efe9fc;
+        }
+        @keyframes card-shimmer {
+          from { filter: brightness(1) drop-shadow(0 0px 0px #fff0); }
+          40% { filter: brightness(1.045) drop-shadow(0 3.5px 10px #deeaff48); }
+          80% { filter: brightness(1.07) drop-shadow(0 9px 24px #ab47bc11); }
+          to   { filter: brightness(1.09) drop-shadow(0 17px 32px #4f8cff17); }
+        }
+        @keyframes auth-title-pop {
+          0% { opacity: 0; transform: scale(0.95) translateY(12px);}
+          60% { opacity: 1; transform: scale(1.07) translateY(-3px);}
+          85% { transform: scale(0.96);}
+          100% { opacity: 1; transform: scale(1);}
         }
         `}
       </style>
@@ -1169,47 +1215,51 @@ function DashboardKPI({ title, value, color = 'primary' }) {
     secondary: '#6c757d',
     success: '#28a745'
   };
-  // Dynamic glowing card effect on hover
+  // Dynamic glowing card effect, scale pop, shimmer animation on hover
+  const [hover, setHover] = React.useState(false);
   return (
-    <div style={{
-      background: 'linear-gradient(120deg, #f8fafc 70%, #e3f2fd 100%)',
-      borderLeft: `8px solid ${colorMap[color]}`,
-      borderRadius: 24,
-      boxShadow: '0 8px 38px #4f8cff17, 0 0.5px 7px #ab47bc17',
-      padding: '26px 38px 15px 22px',
-      minWidth: 185,
-      maxWidth: 270,
-      textAlign: 'left',
-      fontSize: 16,
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'flex-start',
-      marginBottom: 9,
-      position: 'relative',
-      transition: 'box-shadow 0.16s, transform 0.13s',
-      cursor: 'pointer',
-      overflow: 'hidden'
-    }}
-      onMouseEnter={e =>
-        e.currentTarget.style.boxShadow = `0 22px 48px 6px ${colorMap[color]}33, 0 1.5px 20px #ab47bc18`
-      }
-      onMouseLeave={e =>
-        e.currentTarget.style.boxShadow = '0 8px 38px #4f8cff17, 0 0.5px 7px #ab47bc17'
-      }
+    <div
+      style={{
+        background: hover
+          ? 'linear-gradient(120deg, #e3f2fd 80%, #d7ced3 100%)'
+          : 'linear-gradient(120deg, #f8fafc 70%, #e3f2fd 100%)',
+        borderLeft: `8px solid ${colorMap[color]}`,
+        borderRadius: 28,
+        boxShadow: hover
+          ? `0 26px 68px 13px ${colorMap[color]}3a, 0 1.5px 24px #ab47bc25`
+          : '0 8px 38px #4f8cff17, 0 0.5px 7px #ab47bc17',
+        padding: '28px 41px 18px 24px',
+        minWidth: 195,
+        maxWidth: 280,
+        textAlign: 'left',
+        fontSize: 16,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        marginBottom: 12,
+        position: 'relative',
+        transition: 'box-shadow 0.19s cubic-bezier(.62,.2,.72,.9), background 0.2s, transform 0.18s cubic-bezier(.62,.4,.19,1.25)',
+        cursor: 'pointer',
+        overflow: 'hidden',
+        transform: hover ? 'scale(1.04)' : 'scale(1)',
+        animation: hover ? 'card-shimmer 1.16s linear infinite alternate' : undefined
+      }}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
     >
       <b style={{
-        fontSize: 34,
+        fontSize: 38,
         color: colorMap[color],
-        marginBottom: 7,
-        textShadow: `0 4px 20px ${colorMap[color]}77, 0 1px 4px #4f8cff33`
+        marginBottom: 9,
+        textShadow: `0 4px 28px ${colorMap[color]}89, 0 1px 4px #4f8cff33`
       }}>{value}</b>
       <span style={{
-        fontWeight: 700, color: '#5e658c', fontSize: 16.3, letterSpacing: 0.04
+        fontWeight: 800, color: '#5e658c', fontSize: 16.9, letterSpacing: 0.04
       }}>{title}</span>
       <span style={{
-        position: 'absolute', bottom: -9, right: -12, opacity: 0.13,
-        fontSize: 68, fontWeight: 900, color: colorMap[color], pointerEvents: 'none'
+        position: 'absolute', bottom: -11, right: -14, opacity: 0.14,
+        fontSize: 72, fontWeight: 900, color: colorMap[color], pointerEvents: 'none'
       }}>❉</span>
     </div>
   );
@@ -1267,16 +1317,16 @@ function CustomerTable({ customers, actions = false, onEdit, onDelete }) {
                   fontWeight: 900,
                   fontSize: 21,
                   cursor: 'pointer',
-                  marginRight: 4,
-                  borderRadius: 6,
-                  boxShadow: '0 1px 5px #4f8cff15',
-                  transition: 'transform 0.13s, color 0.14s',
-                  padding: '2px 7px'
+                  marginRight: 6,
+                  borderRadius: 7,
+                  boxShadow: '0 1px 6px #4f8cff18',
+                  transition: 'transform 0.12s, color 0.14s, box-shadow 0.16s',
+                  padding: '2px 9px'
                 }}
                   onClick={() => onEdit && onEdit(c)}
-                  onMouseDown={e => e.target.style.transform = 'scale(1.18)'}
-                  onMouseUp={e => e.target.style.transform = 'scale(1)'}
-                  onMouseLeave={e => e.target.style.transform = 'scale(1)'}
+                  onMouseDown={e => { e.target.style.transform = 'scale(1.17)'; e.target.style.color='#ab47bc'; e.target.style.boxShadow='0 5px 12px #ab47bc38'; }}
+                  onMouseUp={e => { e.target.style.transform = 'scale(1)';  e.target.style.color='#4F8CFF'; e.target.style.boxShadow='0 1px 6px #4f8cff18'; }}
+                  onMouseLeave={e => {e.target.style.transform = 'scale(1)';  e.target.style.color='#4F8CFF'; e.target.style.boxShadow='0 1px 6px #4f8cff18';}}
                 >&#9998;</button>{' '}
                 <button title="Delete" style={{
                   border: 'none',
@@ -1285,16 +1335,16 @@ function CustomerTable({ customers, actions = false, onEdit, onDelete }) {
                   fontWeight: 900,
                   fontSize: 25,
                   cursor: 'pointer',
-                  marginLeft: 6,
-                  borderRadius: 6,
-                  boxShadow: '0 1px 4px #ff525218',
-                  transition: 'transform 0.13s, color 0.17s',
-                  padding: '2px 10px'
+                  marginLeft: 7,
+                  borderRadius: 7,
+                  boxShadow: '0 1px 6px #ff525223',
+                  transition: 'transform 0.13s, color 0.15s, box-shadow 0.17s',
+                  padding: '2px 12px'
                 }}
                   onClick={() => onDelete && onDelete(c.id)}
-                  onMouseDown={e => e.target.style.transform = 'scale(1.2)'}
-                  onMouseUp={e => e.target.style.transform = 'scale(1)'}
-                  onMouseLeave={e => e.target.style.transform = 'scale(1)'}
+                  onMouseDown={e => {e.target.style.transform = 'scale(1.21)'; e.target.style.color='#c51c36'; e.target.style.boxShadow='0 7px 16px #ff525249';}}
+                  onMouseUp={e => {e.target.style.transform = 'scale(1)'; e.target.style.color='#ff5252'; e.target.style.boxShadow='0 1px 6px #ff525223';}}
+                  onMouseLeave={e => {e.target.style.transform = 'scale(1)'; e.target.style.color='#ff5252'; e.target.style.boxShadow='0 1px 6px #ff525223';}}
                 >&times;</button>
               </td>
             )}
@@ -1309,20 +1359,20 @@ function CustomerTable({ customers, actions = false, onEdit, onDelete }) {
 function inputStyle(overrides = {}) {
   return {
     width: '100%',
-    fontSize: 16.2,
-    padding: '12px 13px',
+    fontSize: 16.4,
+    padding: '13px 15px',
     marginTop: 2,
     marginBottom: 2,
-    borderRadius: 12,
-    border: '2.2px solid #bcd5ed',
+    borderRadius: 13,
+    border: '2.1px solid #bcd5ed',
     outline: 'none',
-    background: 'rgba(255,255,255,0.70)',
+    background: 'rgba(255,255,255,0.79)',
     color: 'var(--text-dark)',
     boxSizing: 'border-box',
-    boxShadow: '0 2px 13px #e3eafc18',
-    transition: 'border-color 0.19s, box-shadow 0.22s',
+    boxShadow: '0 2px 13px #e3eafc18, 0 2.5px 7px #4f8cff09 inset',
+    transition: 'border-color 0.23s, box-shadow 0.29s',
     fontWeight: 500,
-    letterSpacing: 0.02,
+    letterSpacing: 0.013,
     ...overrides,
   };
 }
